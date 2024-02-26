@@ -2,6 +2,14 @@ import React from "react";
 import BannerBackground from "../Assets/home-banner-background.png";
 import Navbar from "./Navbar";
 
+function Input(props){
+  return(
+    <div>
+      <label htmlFor="{props.field}">{props.Filed}</label>
+      <input type="text" id="{props.field"/>
+    </div>
+  )
+}
 const Home = () => {
   return (
     <div className="home-container">
@@ -22,8 +30,7 @@ const Home = () => {
 
           {/* Username field */}
           <div>
-            <label htmlFor="username">Username:</label>
-            <input type="text" id="username" />
+            <Input field= "username" Filed="Username:" />
           </div>
 
 
@@ -37,12 +44,11 @@ const Home = () => {
           {/* UserID and Password */}
           <div>
             <div>
-              <label htmlFor="userId">UserID:</label>
-              <input type="text" id="userId" />
+              <Input field="userID" Filed="UserID:" />
             </div>
             <div>
-              <label htmlFor="password">Password:</label>
-              <input type="password" id="password" />
+            
+              <Input field="password" Filed="Password:" />
             </div>
 
 
@@ -57,28 +63,26 @@ const Home = () => {
 
           {/* Project details */}
           <div>
-            <label htmlFor="name">Name:</label>
-            <input type="text" id="name" />
+            
+            <Input field="name" Filed="Name:" />
           </div>
 
 
           <div>
-            <label htmlFor="description">Description:</label>
-            <input type="text" id="description" />
+            <Input field="description" Filed="Description:" />
           </div>
 
 
           <div>
-            <label htmlFor="projectId">ProjectID:</label>
-            <input type="text" id="projectId" />
+            
+            <Input field="projectId" Filed="ProjectID:" />
           </div>
 
 
           {/* Use Existing Project */}
           <div>
             <h2>Use Existing Project</h2>
-            <label htmlFor="existingProjectId">ProjectID:</label>
-            <input type="text" id="existingProjectId" />
+            <Input field="existingProjectId" Filed="ProjectID:" />
           </div>
 
 
