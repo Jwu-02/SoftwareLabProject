@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Home = (props) => {
 
     const [username, setUsername] = useState("");
     const [userID, setUserID] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
       e.preventDefault();
-    }
-
-    const handleLogin = () => {
-      navigate("./Project");
     }
 
     return (
@@ -29,7 +23,7 @@ const Home = (props) => {
           <label htmlFor="password">password</label>
           <input value = {password} onChange={(e) => setPassword(e.target.value)} type="text" id="password" name="password"/>
 
-          <button onClick={handleLogin}>Login</button>
+          <button>Login</button>
         </form>
         <button className="link-button" onClick={() => props.onFormSwitch("NewUser")}>New user? Register here</button>
       </div>
