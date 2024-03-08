@@ -11,7 +11,24 @@
 .auth-form-container, .home-form, .newuser-form{
   display: flex;
   flex-direction: column;
+  
 }
+
+.project-container, .resource-container{
+  display: flex;
+  flex-direction: row;
+}
+
+.project-user, .resource-section{
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  margin: 20px; /* Adjust spacing between the h2 elements */
+}
+
 
 .auth-form-container{
   padding: 5rem;
@@ -41,6 +58,13 @@ button{
   color: #bf5700;
   font-weight: bold;
 }
+
+
+.button-container button{
+    margin-bottom: 2.5px;
+    width: 100%;
+}
+
 
 .link-button {
   background: none;

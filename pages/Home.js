@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router";
 
 const Home = (props) => {
 
@@ -6,14 +7,21 @@ const Home = (props) => {
     const [userID, setUserID] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
+    const navigate = useNavigate();
+
+    const handleNewUserClick = () => {
+        navigate('/newUser');
+    };
+
+    const handleLogin = () => {
+      navigate('/project')
     }
 
     return (
       <div className="auth-form-container">
-        <h1>ECE 461L: User Management</h1>
-        <form className="home-form" onSubmit={handleSubmit}>
+        <h1>ECE461L: User Management</h1>
+        <h2>Sign-In</h2>
+        <form className="home-form">
           <label htmlFor="username">username</label>
           <input value = {username} onChange={(e) => setUsername(e.target.value)} type="text" id="username" name="username"/>
 
@@ -23,9 +31,9 @@ const Home = (props) => {
           <label htmlFor="password">password</label>
           <input value = {password} onChange={(e) => setPassword(e.target.value)} type="text" id="password" name="password"/>
 
-          <button>Login</button>
+          <button onClick={handleLogin}>Login</button>
         </form>
-        <button className="link-button" onClick={() => props.onFormSwitch("NewUser")}>New user? Register here</button>
+        <button className="link-button" onClick={handleNewUserClick}>New user? Register here</button> 
       </div>
 
     );
