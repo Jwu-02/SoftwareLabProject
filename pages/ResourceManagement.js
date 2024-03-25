@@ -1,45 +1,91 @@
 import React, { useState } from 'react';
+import EnterQtyBox from './components/EnterQtyBox';
+import CheckInBox from './components/CheckInBox';
+import CheckOutBox from './components/CheckOutBox'
 
 const ResourceManagement = () => {
 
-    const [HW1cap, setHW1cap] = useState("");
-    const [HW2cap, setHW2cap] = useState("");
+    // State variables to store entered quantities for HWSet1 and HWSet2
+    const [enteredQty1, setEnteredQty1] = useState(0);
+    const [enteredQty2, setEnteredQty2] = useState(0);
     
-    const [HW1av, setHW1av] = useState("");
-    const [HW2av, setHW2av] = useState("");
+    const [qty1, setQty1] = useState(0);
+    const [qty2, setQty2] = useState(0);
+    
+    const handleQtyChange1 = (newQty) => {
+        setEnteredQty1(newQty);
+    };
 
-    const [HW1req, setHW1req] = useState("");
-    const [HW2req, setHW2req] = useState("");
+    const handleQtyChange2 = (newQty) => {
+        setEnteredQty2(newQty);
+    };
+
+    // handlers for checking in and out HWSet1
+    const handleCheckIn1 = () => {
+        if(qty1+ enteredQty1 <= 100){
+            setQty1(prevQty => prevQty + enteredQty1);
+        } else {
+            // Optionally, you can show a message or handle this case in another way
+            console.log('Cannot check in. Capacity exceeded.');
+        }
+    };
+
+    const handleCheckOut1 = () => {
+        if(qty1 - enteredQty1 >= 0){
+            setQty1(prevQty => prevQty - enteredQty1);
+        } else {
+            // Optionally, you can show a message or handle this case in another way
+            console.log('Cannot check out. Capacity exceeded.');
+        }
+    };
+
+    // handlers for checking in and out HWSet2
+    const handleCheckIn2 = () => {
+        if(qty2+ enteredQty2 <= 100){
+            setQty2(prevQty => prevQty + enteredQty2);
+        } else {
+            // Optionally, you can show a message or handle this case in another way
+            console.log('Cannot check in. Capacity exceeded.');
+        }
+    };
+    const handleCheckOut2 = () => {
+        if(qty2 - enteredQty2 >= 0){
+            setQty2(prevQty => prevQty - enteredQty2);
+        } else {
+            // Optionally, you can show a message or handle this case in another way
+            console.log('Cannot check out. Capacity exceeded.');
+        }
+    };
 
     return (
         <div className="auth-form-container">
             <h1>ECE461L: Resource Management</h1>
-                <div className='resource-container'>
-                    { /* will probably need to change as these are set values? */}
-                    <form className="resource-section">
-                    <h2>Capacity</h2>
-                        <input value = {HW1cap} onChange={(e) => setHW1cap(e.target.value)} type="text" id="HW1cap" name="HW1cap"/>
-                        <input value = {HW2cap} onChange={(e) => setHW2cap(e.target.value)} type="text" id="HW2cap" name="HW2cap"/>
-                    </form>
+            <h2>Project Name (Here Temporarily)</h2>
+        
 
-                    { /* will probably need to change as these are set values? */}
-                    <form className="resource-section">
-                    <h2>Availability</h2>
-                        <input value = {HW1av} onChange={(e) => setHW1av(e.target.value)} type="text" id="HW1av" name="HW1av"/>
-                        <input value = {HW2av} onChange={(e) => setHW2av(e.target.value)} type="text" id="HW2av" name="HW2av"/>
-                    </form>
-
-                    { /* will probably need to change as these are set values? */}
-                    <form className="resource-section">
-                    <h2>Request</h2>
-                        <input value = {HW1req} onChange={(e) => setHW1req(e.target.value)} type="text" id="HW1req" name="HW1req"/>
-                        <input value = {HW2req} onChange={(e) => setHW2req(e.target.value)} type="text" id="HW2req" name="HW2req"/>
-                        <div className="button-container">
-                            <button>check-in</button>
-                            <button>check-out</button>
-                        </div>
-                    </form>
+            <div className="resource-container">
+                <div>
+                    <h2>HWSet1: {qty1}/100</h2>
+                    <h2>HWSet2: {qty2}/100 </h2>
                 </div>
+
+                <div >
+                    <EnterQtyBox initialQty={0} onQtyChange={handleQtyChange1} />
+                    <EnterQtyBox initialQty={0} onQtyChange={handleQtyChange2} />
+                </div>
+
+                <div >
+                    <CheckInBox onCheckIn={handleCheckIn1} />
+                    <CheckInBox onCheckIn={handleCheckIn2} />
+                </div>
+
+                <div>
+                    <CheckOutBox onCheckOut={handleCheckOut1} />
+                    <CheckOutBox onCheckOut={handleCheckOut2} />
+                </div>
+            </div>
+
+
         </div>
     );
 }
