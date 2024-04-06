@@ -69,7 +69,7 @@ function ButtonCheckIn_Out ({setCheckIn}){
     )
 }
 
-const Projects = () => {
+const Projects = (project_id) => {
     const [HW1cap, setHW1cap] = useState("");
     const [HW2cap, setHW2cap] = useState("");
 
@@ -139,8 +139,8 @@ const Projects = () => {
             {/* Project 1 */}
             <div className='resource-container'>
                 <form className="resource-section">
-                    <h2>Project Name 1</h2>
-                    <button onClick={handleClick1}>{button1Text}</button>
+                    <h2>Your Project</h2>
+                    {/*<button onClick={handleClick1}>{button1Text}</button>*/}
                 </form>
                 <div className="resource-section">
                     <HW_set project_id="1" hwset_num="1" cap="165" HW_req={HW1req} setHW_req={setHW1req}
