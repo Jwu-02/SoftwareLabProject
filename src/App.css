@@ -11,7 +11,7 @@
 .auth-form-container, .home-form, .newuser-form{
   display: flex;
   flex-direction: column;
-
+  
 }
 
 .project-container, .resource-container{

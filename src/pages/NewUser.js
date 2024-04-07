@@ -6,7 +6,7 @@ const NewUser = (props) => {
     const [userID, setUserID] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-
+    
     const navigate = useNavigate();
 
     const handleExistingUserClick = () => {

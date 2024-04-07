@@ -57,7 +57,7 @@ const Project = () => {
       setMessage("No field can be left empty");
       return;
   }
-
+  
       try {
         const response = await fetch('/new_project', {
               method: 'POST',
@@ -86,7 +86,7 @@ const Project = () => {
             <div className="project-container">
                 <form className="project-user" onSubmit={handleNewProjectSubmmit}>
                     <h2>Create New Project</h2>
-
+                    
                     <label htmlFor="name">name</label>
                     <input value={name} onChange={(e) => setName(e.target.value)} type="text" id="name" name="name" />
 

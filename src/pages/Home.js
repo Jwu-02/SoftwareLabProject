@@ -52,7 +52,7 @@ const Home = (props) => {
         }
     }
 
-
+    
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -80,9 +80,9 @@ const Home = (props) => {
 
                 <label htmlFor="password">password</label>
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="text" id="password" name="password" />
-
+                
                 <button>Login</button>
-
+                
             </form>
             <div>{message}</div>
             <button className="link-button" onClick={handleRegister}>New user? Register here</button>
@@ -92,4 +92,3 @@ const Home = (props) => {
 
 
 export default Home;
-
