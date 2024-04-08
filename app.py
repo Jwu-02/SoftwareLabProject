@@ -14,21 +14,21 @@ x = datetime.datetime.now()
 # Initializing flask app
 # app = Flask(__name__)
 
-flask_app = Flask(__name__,  static_folder="./build", static_url_path="/")
-CORS(flask_app)
+app = Flask(__name__,  static_folder="./build", static_url_path="/")
+CORS(app)
 
-@flask_app.route('/', methods = ["GET"])
+@app.route('/', methods = ["GET"])
 def index():
-    return flask_app.send_static_file('index.html')
+    return app.send_static_file('index.html')
 
-@flask_app.errorhandler(404)
+@app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404
 
-flask_app.send_static_file('index.html')
+app.send_static_file('index.html')
 
 if __name__ == '__main__':
-    flask_app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
 # Connect to MongoDB
 # client = MongoClient('mongodb+srv://thunguyen8:ece461l@@cluster0.bor9lkx.mongodb.net/')
