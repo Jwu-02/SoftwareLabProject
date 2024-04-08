@@ -22,9 +22,9 @@ flask_app = Flask(__name__,  static_folder="./build", static_url_path="/")
 def index():
     return flask_app.send_static_file('index.html')
 
-@flask_app.errorhandler()
-def not_found(e):
-    return
+@flask_app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
 
 flask_app.send_static_file('index.html')
 
