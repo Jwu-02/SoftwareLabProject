@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
 import datetime
+import os
 ###
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -12,8 +13,23 @@ x = datetime.datetime.now()
 
 # Initializing flask app
 # app = Flask(__name__)
-app = Flask(__name__, static_folder="build", template_folder="build", static_url_path="/")
+app = Flask(__name__, static_folder="./build", template_folder="./build", static_url_path="/")
 CORS(app)
+
+flask_app = Flask(__name__,  static_folder="./build", static_url_path="/")
+
+@flask_app.route('/', methods = ["GET"])
+def index():
+    return flask_app.send_static_file('index.html')
+
+@flask_app.errorhandler()
+def not_found(e):
+    return
+
+flask_app.send_static_file('index.html')
+
+if __name__ == '__main__':
+    flask_app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
 # Connect to MongoDB
 # client = MongoClient('mongodb+srv://thunguyen8:ece461l@@cluster0.bor9lkx.mongodb.net/')
