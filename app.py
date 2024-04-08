@@ -52,10 +52,6 @@ projects_collection = db.get_collection('Projects')
 
 # Inserting hardware sets into the collection
 
-@app.route('/', methods=["GET"])
-def index():
-    return render_template('index.html')
-
 
 @app.route('/save_user', methods=['POST'])
 def save_user():
