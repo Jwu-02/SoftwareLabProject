@@ -13,10 +13,9 @@ x = datetime.datetime.now()
 
 # Initializing flask app
 # app = Flask(__name__)
-app = Flask(__name__, static_folder="./build", template_folder="./build", static_url_path="/")
-CORS(app)
 
 flask_app = Flask(__name__,  static_folder="./build", static_url_path="/")
+CORS(flask_app)
 
 @flask_app.route('/', methods = ["GET"])
 def index():
