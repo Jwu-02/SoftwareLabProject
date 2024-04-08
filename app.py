@@ -25,8 +25,6 @@ def index():
 def not_found_error(error):
     return render_template('404.html'), 404
 
-app.send_static_file('index.html')
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
