@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
 import datetime
-import os
 ###
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -13,20 +12,8 @@ x = datetime.datetime.now()
 
 # Initializing flask app
 # app = Flask(__name__)
-
-app = Flask(__name__,  static_folder="./build", static_url_path="/")
+app = Flask(__name__, static_folder="build", template_folder="build", static_url_path="/")
 CORS(app)
-
-@app.route('/', methods = ["GET"])
-def index():
-    return app.send_static_file('index.html')
-
-@app.errorhandler(404)
-def not_found_error(error):
-    return render_template('404.html'), 404
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
 # Connect to MongoDB
 # client = MongoClient('mongodb+srv://thunguyen8:ece461l@@cluster0.bor9lkx.mongodb.net/')
@@ -49,6 +36,10 @@ projects_collection = db.get_collection('Projects')
 
 
 # Inserting hardware sets into the collection
+
+@app.route('/', methods=["GET"])
+def index():
+    return render_template('index.html')
 
 
 @app.route('/save_user', methods=['POST'])
@@ -78,60 +69,6 @@ def login():
         return jsonify({'message': 'Invalid username or password'}), 401
 
     return jsonify({'message': 'Logged in successfully'}), 200
-
-
-################################################################################
-# This is for Project_v1 that associate with userID
-@app.route('/project', methods=['POST'])
-def projectManagement():
-    data = request.get_json()
-    name = data.get('name')
-    description = data.get('description')
-    projectid = data.get('projectID')
-    # project  = user_collection.find_one({'userID': userID})
-    return jsonify({'message': 'Entering your database'}), 200
-
-
-# 200 means that everything is ok and is proceeding
-
-@app.route('/create_project', methods=['POST'])
-def createNewProject():
-    data = request.get_json()
-    user_id = data.get('userID')
-    name = data.get('name')
-    description = data.get('description')
-    project_id = data.get('projectID')
-
-    user = user_collection.find_one({'userID': user_id})
-    if not user:
-        return jsonify({'message': 'User not found'}), 404
-
-    else:
-        if project_id in user.get('projectIDs', []):
-            return jsonify({'message': f'Project ID {project_id} already exists for user {user_id}'}), 400
-
-    # This is how you add to the database
-    user_collection.update_one({'userID': user_id}, {'$push': {'projectIDs': project_id}})
-    return jsonify({'message': f'Project ID {project_id} created for user {user_id}'}), 201
-
-
-@app.route('/existing_project', methods=['POST'])
-def existingProject():
-    data = request.get_json()
-    user_id = data.get('userID')
-    project_id = data.get('projectID')
-
-    user = user_collection.find_one({'userID': user_id})
-
-    if user and project_id in user.get('projectIDs', []):
-        # Project ID exists in the user's list of projectIDs
-        return jsonify({'message': f'Project ID {project_id} exists for user {user_id}'}), 200
-    else:
-        return jsonify({'message': f'Project ID {project_id} does not exist for user {user_id}'}), 404
-
-
-################################################################################
-
 
 ################################################################################
 # This is for Project: Only due with Project database, no userID involve
@@ -168,20 +105,6 @@ def resourceManagement():
     return jsonify({'HW1availability': availability1['avail'], 'HW2availability': availability2['avail']})
 
 
-
-# This is to pass the number of each category to the front end
-# @app.route('/get_hardware_sets', methods=['GET'])
-# def get_hardware_sets():
-#     try:
-#         # Retrieve hardware sets data from your database
-#         hardware_sets = HW_collection.find()
-#         # Convert the MongoDB cursor to a list of dictionaries
-#         hardware_sets_list = list(hardware_sets)
-#         return jsonify(hardware_sets_list)
-#     except Exception as e:
-#         return jsonify({'error': str(e)})
-
-
 @app.route('/check_in_hardware', methods=['POST'])
 def checkIn_hardware():
     data = request.get_json()
@@ -206,10 +129,6 @@ def checkIn_hardware():
             return jsonify({'error': f'Quantity {qty} exceeds the capacity {cap} for hardware {hw_num}', "new_avail" :new_avail}), 400
     else:
         return jsonify({'error': f'Hardware {hw_num} not found'}), 404
-
-# @app.route('/resourceManagement')
-# def resourceManagement():
-#     data = request.get_json()
 
 @app.route('/check_out_hardware', methods=['POST'])
 def checkOut_hardware():
