@@ -2,13 +2,14 @@
 import React, { cloneElement, useState, useEffect, useRef} from 'react';
 import { useNavigate } from "react-router";
 
+
 function HW(props){
     return(
         <h2>HWSet{props.hwset_num}:{props.availabiliy}/{props.cap} </h2>
     )
 }
 
-function HW_set({HW_set,project_id,hwset_num,avail, cap,HW_req,setHW_req,setCheckIn_}){
+function HW_set({HW_set,project_id,hwset_num,avail, cap,HW_req,setHW_req,setCheckIn_,setResponseMessage}){
     // console.log('Initial avail of hw ', hwset_num, ' :', avail);
 
    const [availability, setavailability] = useState(avail);
@@ -31,7 +32,8 @@ function HW_set({HW_set,project_id,hwset_num,avail, cap,HW_req,setHW_req,setChec
                 }),
             })
             const responseData = await response.json();
-                alert(JSON.stringify(responseData))
+                // alert(JSON.stringify(responseData))
+                setResponseMessage(JSON.stringify(responseData));
             setavailability(responseData.new_avail)
 
         }catch (error) {
@@ -66,8 +68,9 @@ function HW_set({HW_set,project_id,hwset_num,avail, cap,HW_req,setHW_req,setChec
 }
 
 const Projects = () => {
-    const [HW1cap, setHW1cap] = useState("");
-    const [HW2cap, setHW2cap] = useState("");
+    // const [HW1cap, setHW1cap] = useState("");
+    // const [HW2cap, setHW2cap] = useState("");
+    const [responseMessage, setResponseMessage] = useState('');
 
     const [HW1Availability ,setHW1Availability] = useState("0");
 
@@ -118,19 +121,13 @@ const Projects = () => {
                 </form>
                 <div className="resource-section">
                     <HW_set project_id="1" hwset_num="1" avail={HW1av} cap="165" HW_req={HW1req} setHW_req={setHW1req}
-                            setCheckIn_={setCheckIn1}/>
+                            setCheckIn_={setCheckIn1} setResponseMessage={setResponseMessage}/>
                     <HW_set project_id="1" hwset_num="2" avail={HW2av} cap="150" HW_req={HW2req} setHW_req={setHW2req}
-                            setCheckIn_={setCheckIn2}/>
-                    {/* Conditionally render capacity */}
-                    {/* {isCapacityRevealed && (
-                        <div>
-                            <p>HW1 Initial Availability: {HW1av}</p>
-                            <p>HW2 Initial Availability: {HW2av}</p>
-                        </div>
-                    )} */}
-
+                            setCheckIn_={setCheckIn2} setResponseMessage={setResponseMessage}/>
                 </div>
+                
             </div>
+            <div>{responseMessage}</div>
         </div>
     );
 }

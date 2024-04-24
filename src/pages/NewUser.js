@@ -17,6 +17,7 @@ const NewUser = (props) => {
         e.preventDefault();
 
          // Check if userID or password is null, empty or just spaces
+         // trim() method removes the leading and trailing spaces from the userID
          if (!userID || !userID.trim() || !password || !password.trim()) {
             setMessage("User ID or password cannot be empty");
             return;
@@ -29,7 +30,7 @@ const NewUser = (props) => {
         };
 
         try {
-            // Make a POST request to your backend
+            // Make a POST request to backend
             const response = await fetch('/save_user', {
                 method: 'POST',
                 headers: {
@@ -42,14 +43,11 @@ const NewUser = (props) => {
             const responseData = await response.json();
             console.log(responseData); // Log the response for debugging purposes
 
-            // Optionally, you can handle the response here and update your UI accordingly
             if (response.status === 201) {
                 // User registered successfully
-                // Navigate to the project page
                 setMessage("User registered successfully");
             } else{
                 // Registration failed
-                // Update your UI accordingly
                 setMessage(responseData.message);
             }
         } catch (error) {
